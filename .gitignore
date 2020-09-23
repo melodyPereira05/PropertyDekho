@@ -26,6 +26,7 @@ media
 
 # Distribution / packaging
 .Python
+
 build/
 develop-eggs/
 dist/
@@ -134,6 +135,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
+/static
 
 # mypy
 .mypy_cache/
@@ -145,5 +147,7 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
+/media
 
 # End of https://www.toptal.com/developers/gitignore/api/django

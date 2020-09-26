@@ -33,13 +33,74 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item active"><a href="about.html" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="agent.html" class="nav-link">Agent</a></li>
-	          <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-	          <li class="nav-item"><a href="properties.html" class="nav-link">Properties</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact Us</a></li>
+            <li
+            {% if '/' == request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+
+           <a href="{% url 'home-page' %}" class="nav-link">Home</a></li>
+           <li
+           {% if 'about' in request.path %}
+           class="nav-item active "
+           {% else %}
+           class="nav-item"
+           {% endif %}
+           >
+
+           <a href="{% url 'about-page' %}" class="nav-link">About</a></li>
+           <li
+           {% if 'agents' in request.path %}
+           class="nav-item active "
+           {% else %}
+           class="nav-item"
+           {% endif %}
+           >
+            <a href="agent.html" class="nav-link">Agent</a></li>
+            <li
+            {% if 'properties' in request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+            <a href="{% url 'all-property' %}" class="nav-link">Properties</a></li>
+            <li
+            {% if 'blog' in request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+            <a href="blog.html" class="nav-link">Blog</a></li>
+            <li
+            {% if 'servies' in request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+            <a href="blog.html" class="nav-link">services</a></li>
+    
+            <li
+            {% if 'signup' in request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+            <a href="services.html" class="nav-link">Sign up</a></li>
+            <li
+            {% if 'login' in request.path %}
+            class="nav-item active "
+            {% else %}
+            class="nav-item"
+            {% endif %}
+            >
+
+            <a href="services.html" class="nav-link">Login</a></li>
 	        </ul>
 	      </div>
 	    </div>

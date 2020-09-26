@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block content %}
     
-    <section class="hero-wrap" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap" style="background-image: url('/static/images/bg_1.jpg');" data-stellar-background-ratio="0.5"> 
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-center">
@@ -9,7 +10,7 @@
           	<div class="text">
 	            <h1 class="mb-4">Find Perfect <br>House From Your Area.</h1>
 	            <p style="font-size: 18px;">From as low as $20 A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-	            <p><a href="#" class="btn btn-primary py-3 px-4">View all properties</a></p>
+	            <p><a href="{% url 'all-property' %}" class="btn btn-primary py-3 px-4">View all properties</a></p>
             </div>
           </div>  
         </div>
@@ -21,67 +22,61 @@
 	    	<div class="row">
 					<div class="col-md-12">
 						<div class="search-wrap-1 ftco-animate p-4">
-							<form action="#" class="search-property-1">
+
+
+							
+
+					<form action="{% url 'property-search' %}" class="search-property-1">
 		        		<div class="row">
 		        			<div class="col-lg align-items-end">
 		        				<div class="form-group">
 		        					<label for="#">Keyword</label>
 		          				<div class="form-field">
 		          					<div class="icon"><span class="fa fa-search"></span></div>
-				                <input type="text" class="form-control" placeholder="Enter Keyword">
+				                <input type="text" class="form-control" name="keywords" placeholder="Enter Keyword">
 				              </div>
 			              </div>
 		        			</div>
+		        				    
 		        			<div class="col-lg align-items-end">
 		        				<div class="form-group">
-		        					<label for="#">Property Type</label>
+		        					<label for="#">Price Range</label>
+		        					<div class="form-field" style="color:black " >
+		          					<div class="select-wrap">
+		                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
+		                      <select name="price" id="" class="form-control"  style="color:black " >
+								  {% for key,value in prices.items %}
+								
+								<option value="{{ key }}">{{ value }}</option>
+								{% endfor %}
+		                        
+		                      </select>
+		                    </div>
+				              </div>
+			              </div>
+							</div>
+							<div class="col-lg align-items-end">
+		        				<div class="form-group">
+		        					<label for="#">State</label>
 		        					<div class="form-field">
 		          					<div class="select-wrap">
 		                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-		                      <select name="" id="" class="form-control">
-		                        <option value="">Residence</option>
-		                        <option value="">Offices</option>
-		                        <option value="">Commercial</option>
+		                      <select name="" id=""  name="state" class="form-control">
+								<option  selected="true" disabled="disabled">States</option>
+								{% for key,value in states.items %}
+								
+								<option value="{{ key }}">{{ value }}</option>
+								{% endfor %}
+							
+								<option value=""></option>
+							
+		                        
 		                      </select>
 		                    </div>
 				              </div>
 			              </div>
 		        			</div>
-		        			<div class="col-lg align-items-end">
-		        				<div class="form-group">
-		        					<label for="#">Location</label>
-		          				<div class="form-field">
-		          					<div class="icon"><span class="fa fa-search"></span></div>
-				                <input type="text" class="form-control" placeholder="Location">
-				              </div>
-			              </div>
-		        			</div>
-		        			<div class="col-lg align-items-end">
-		        				<div class="form-group">
-		        					<label for="#">Price Limit</label>
-		        					<div class="form-field">
-		          					<div class="select-wrap">
-		                      <div class="icon"><span class="fa fa-chevron-down"></span></div>
-		                      <select name="" id="" class="form-control">
-		                        <option value="">$5,000</option>
-		                        <option value="">$10,000</option>
-		                        <option value="">$50,000</option>
-		                        <option value="">$100,000</option>
-		                        <option value="">$200,000</option>
-		                        <option value="">$300,000</option>
-		                        <option value="">$400,000</option>
-		                        <option value="">$500,000</option>
-		                        <option value="">$600,000</option>
-		                        <option value="">$700,000</option>
-		                        <option value="">$800,000</option>
-		                        <option value="">$900,000</option>
-		                        <option value="">$1,000,000</option>
-		                        <option value="">$2,000,000</option>
-		                      </select>
-		                    </div>
-				              </div>
-			              </div>
-		        			</div>
+
 		        			<div class="col-lg align-self-end">
 		        				<div class="form-group">
 		        					<div class="form-field">
@@ -90,7 +85,9 @@
 			              </div>
 		        			</div>
 		        		</div>
-		        	</form>
+					</form>
+					
+					
 		        </div>
 					</div>
 	    	</div>
@@ -147,159 +144,67 @@
           	<span class="subheading">What we offer</span>
             <h2 class="mb-2">Featured Properties</h2>
           </div>
+		</div>
+		
+        <div class="row">
+			{% if properties %}
+			{% for property in properties %}
+			
+			<div class="col-md-6 col-lg-4 mb-4">
+        		<div class="property-wrap ftco-animate">
+        			<a href="{% url 'property' property.id %}" class="img" style="background-image: url('{{ property.photo.url }}');">
+        				<div class="rent-sale">
+							{% if property.is_forSale %}
+        					<span class="sale">
+								 Sale
+								</span>
+								{% else %}
+								<span class="rent">
+									Rent
+									</span>
+
+								{% endif %}
+
+							
+							
+        				</div>
+        				<p class="price"><span class="orig-price">${{ property.price | intcomma }}</span></p>
+        			</a>
+        			<div class="text">
+        				<ul class="property_list">
+        					<li><span class="flaticon-bed"></span>{{ property.bedrooms }}</li>
+        					<li><span class="flaticon-bathtub"></span>{{ property.bathrooms }}</li>
+        					<li><span class="flaticon-floor-plan"></span>{{ property.areaSqft }} sqft</li>
+        				</ul>
+        				<h3><a href="#">{{ property.title }}</a></h3>
+        				<span class="location">{{ property.state }}</span>
+        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
+        					<span class="fa fa-link"></span>
+        				</a>
+        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
+        					<div class="d-flex align-items-center">
+	        					<div class="img"  style="background-image: url('{{ property.seller.photo.url }}');"></div>
+	        					<h3 class="ml-2">{{ property.seller}}</h3>
+	        				</div>
+	        				<span class="text-right">{{ property.property_date|date:"D d M Y"  }} </span>
+        				</div>
+        			</div>
+        		</div>
+			</div>
+			
+			{% endfor %}
+			
+
+			{% else %}
+			<div class="col-md-12" >No properties</div>
+			{% endif %}
+             	
+        	
+		</div>
+		
         </div>
-        <div class="row ftco-animate">
-          <div class="col-md-12">
-            <div class="carousel-properties owl-carousel">
-              <div class="item">
-                <div class="property-wrap ftco-animate">
-		        			<a href="#" class="img" style="background-image: url(images/work-1.jpg);">
-		        				<div class="rent-sale">
-		        					<span class="sale">Sale</span>
-		        				</div>
-		        				<p class="price"><span class="orig-price">$300,000</span></p>
-		        			</a>
-		        			<div class="text">
-		        				<ul class="property_list">
-		        					<li><span class="flaticon-bed"></span>3</li>
-		        					<li><span class="flaticon-bathtub"></span>2</li>
-		        					<li><span class="flaticon-floor-plan"></span>1,878 sqft</li>
-		        				</ul>
-		        				<h3><a href="#">The Blue Sky Home</a></h3>
-		        				<span class="location">Oakland</span>
-		        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
-		        					<span class="fa fa-link"></span>
-		        				</a>
-		        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
-		        					<div class="d-flex align-items-center">
-			        					<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-			        					<h3 class="ml-2">John Dorf</h3>
-			        				</div>
-			        				<span class="text-right">2 weeks ago</span>
-		        				</div>
-		        			</div>
-		        		</div>
-              </div>
-              <div class="item">
-                <div class="property-wrap ftco-animate">
-		        			<a href="#" class="img" style="background-image: url(images/work-2.jpg);">
-		        				<div class="rent-sale">
-		        					<span class="rent">Rent</span>
-		        				</div>
-		        				<p class="price"><span class="old-price">800,000</span><span class="orig-price">$3,050<small> / mo</small></span></p>
-		        			</a>
-		        			<div class="text">
-		        				<ul class="property_list">
-		        					<li><span class="flaticon-bed"></span>3</li>
-		        					<li><span class="flaticon-bathtub"></span>2</li>
-		        					<li><span class="flaticon-floor-plan"></span>1,878 sqft</li>
-		        				</ul>
-		        				<h3><a href="#">The Blue Sky Home</a></h3>
-		        				<span class="location">Oakland</span>
-		        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
-		        					<span class="fa fa-link"></span>
-		        				</a>
-		        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
-		        					<div class="d-flex align-items-center">
-			        					<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-			        					<h3 class="ml-2">John Dorf</h3>
-			        				</div>
-			        				<span class="text-right">2 weeks ago</span>
-		        				</div>
-		        			</div>
-		        		</div>
-              </div>
-              <div class="item">
-                <div class="property-wrap ftco-animate">
-		        			<a href="#" class="img" style="background-image: url(images/work-3.jpg);">
-		        				<div class="rent-sale">
-		        					<span class="rent">Rent</span>
-		        				</div>
-		        				<p class="price"><span class="orig-price">$300<small> / mo</small></span></p>
-		        			</a>
-		        			<div class="text">
-		        				<ul class="property_list">
-		        					<li><span class="flaticon-bed"></span>3</li>
-		        					<li><span class="flaticon-bathtub"></span>2</li>
-		        					<li><span class="flaticon-floor-plan"></span>1,878 sqft</li>
-		        				</ul>
-		        				<h3><a href="#">The Blue Sky Home</a></h3>
-		        				<span class="location">Oakland</span>
-		        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
-		        					<span class="fa fa-link"></span>
-		        				</a>
-		        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
-		        					<div class="d-flex align-items-center">
-			        					<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-			        					<h3 class="ml-2">John Dorf</h3>
-			        				</div>
-			        				<span class="text-right">2 weeks ago</span>
-		        				</div>
-		        			</div>
-		        		</div>
-              </div>
-              <div class="item">
-                <div class="property-wrap ftco-animate">
-		        			<a href="#" class="img" style="background-image: url(images/work-4.jpg);">
-		        				<div class="rent-sale">
-		        					<span class="rent">Rent</span>
-		        				</div>
-		        				<p class="price"><span class="orig-price">$300<small> / mo</small></span></p>
-		        			</a>
-		        			<div class="text">
-		        				<ul class="property_list">
-		        					<li><span class="flaticon-bed"></span>3</li>
-		        					<li><span class="flaticon-bathtub"></span>2</li>
-		        					<li><span class="flaticon-floor-plan"></span>1,878 sqft</li>
-		        				</ul>
-		        				<h3><a href="#">The Blue Sky Home</a></h3>
-		        				<span class="location">Oakland</span>
-		        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
-		        					<span class="fa fa-link"></span>
-		        				</a>
-		        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
-		        					<div class="d-flex align-items-center">
-			        					<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-			        					<h3 class="ml-2">John Dorf</h3>
-			        				</div>
-			        				<span class="text-right">2 weeks ago</span>
-		        				</div>
-		        			</div>
-		        		</div>
-              </div>
-              <div class="item">
-                <div class="property-wrap ftco-animate">
-		        			<a href="#" class="img" style="background-image: url(images/work-5.jpg);">
-		        				<div class="rent-sale">
-		        					<span class="rent">Rent</span>
-		        				</div>
-		        				<p class="price"><span class="orig-price">$300<small> / mo</small></span></p>
-		        			</a>
-		        			<div class="text">
-		        				<ul class="property_list">
-		        					<li><span class="flaticon-bed"></span>3</li>
-		        					<li><span class="flaticon-bathtub"></span>2</li>
-		        					<li><span class="flaticon-floor-plan"></span>1,878 sqft</li>
-		        				</ul>
-		        				<h3><a href="#">The Blue Sky Home</a></h3>
-		        				<span class="location">Oakland</span>
-		        				<a href="#" class="d-flex align-items-center justify-content-center btn-custom">
-		        					<span class="fa fa-link"></span>
-		        				</a>
-		        				<div class="list-team d-flex align-items-center mt-2 pt-2 border-top">
-		        					<div class="d-flex align-items-center">
-			        					<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-			        					<h3 class="ml-2">John Dorf</h3>
-			        				</div>
-			        				<span class="text-right">2 weeks ago</span>
-		        				</div>
-		        			</div>
-		        		</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+	  </div>
+	  
     </section>
 
     <section class="ftco-section ftco-no-pt">
@@ -397,12 +302,12 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-7 order-md-last d-flex align-items-stretch">
-						<div class="img w-100 img-2 mr-md-2" style="background-image: url(images/about.jpg);"></div>
-						<div class="img w-100 img-2 ml-md-2" style="background-image: url(images/about-2.jpg);"></div>
+						<div class="img w-100 img-2 mr-md-2" style="background-image: url('/static/images/about.jpg');"></div>
+						<div class="img w-100 img-2 ml-md-2" style="background-image: url('/static/images/about-2.jpg');"></div>
 					</div>
 					<div class="col-md-5 wrap-about py-md-5 ftco-animate">
 	          <div class="heading-section pr-md-5">
-	            <h2 class="mb-4">Ecoverde Real Estate</h2>
+	            <h2 class="mb-4">PropertyDekho Real Estate</h2>
 
 	            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
 	            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
@@ -462,81 +367,31 @@
         <div class="row ftco-animate">
           <div class="col-md-12">
             <div class="carousel-testimony owl-carousel">
+				{% if testemonial %}
+				{% for tm in testemonial %}
               <div class="item">
                 <div class="testimony-wrap py-4">
                   <div class="text">
                   	<span class="fa fa-quote-left"></span>
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <p class="mb-4">{{tm.description}}</p>
                     <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
+                    	<div class="user-img" style="background-image: url('{{ tm.photo.url }}')"></div>
                     	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
+		                    <p class="name">{{ tm.client }}</p>
+		                    <span class="position">{{ tm.client_status }}</span>
 		                  </div>
 	                  </div>
                   </div>
                 </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                  <div class="text">
-                  	<span class="fa fa-quote-left"></span>
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                  <div class="text">
-                  	<span class="fa fa-quote-left"></span>
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                  <div class="text">
-                  	<span class="fa fa-quote-left"></span>
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                  <div class="text">
-                  	<span class="fa fa-quote-left"></span>
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
+			  </div>
+			  {% endfor %}
+			  {% else %}
+			  No testemonies available
+			  {% endif %}
+              
+              
+              
+              
             </div>
           </div>
         </div>
@@ -552,50 +407,26 @@
           </div>
         </div>
         <div class="row">
+
+
+			{% for seller in sellers %}
+		
+		
         	<div class="col-md-3 ftco-animate">
         		<div class="agent">
     					<div class="img">
-		    				<img src="images/team-1.jpg" class="img-fluid" alt="Colorlib Template">
+		    				<img src="{{seller.photo.url}}" class="img-fluid" alt="Colorlib Template" style="width: 800px;
+							height: 300px " >
 		    				<div class="desc">
-		    					<h3><a href="properties.html">Carlos Henderson</a></h3>
-									<p class="h-info"><span class="location">Listing</span> <span class="details">10 Properties</span></p>
+		    					<h3><a href="properties.html">{{ seller.name }}</a></h3>
+									<p class="h-info"><span class="location">Listing</span> <span class="details">{{seller.num_prop }} Properties</span></p>
 		    				</div>
 	    				</div>
     				</div>
         	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="images/team-2.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">Mike Bochs</a></h3>
-								<p class="h-info"><span class="location">Listing</span> <span class="details">10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="images/team-3.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">Jessica Moore</a></h3>
-								<p class="h-info"><span class="location">Listing</span> <span class="details">10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3 ftco-animate">
-        		<div class="agent">
-    					<div class="img">
-		    				<img src="images/team-4.jpg" class="img-fluid" alt="Colorlib Template">
-	    				</div>
-	    				<div class="desc">
-	    					<h3><a href="properties.html">Sarah Geronimo</a></h3>
-								<p class="h-info"><span class="position">Listing</span> <span class="details">10 Properties</span></p>
-	    				</div>
-    				</div>
-        	</div>
+        	{% endfor %}
+        	
+        	
         </div>
     	</div>
     </section>

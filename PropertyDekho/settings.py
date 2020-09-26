@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'routes.apps.RoutesConfig',
+    'properties.apps.PropertiesConfig',
+    'blog.apps.BlogConfig',
+    'agents.apps.AgentsConfig',
+    'django.contrib.humanize',  #for commmas
+    
 ]
 
 MIDDLEWARE = [
@@ -127,4 +132,6 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'PropertyDekho/static')   #python manage.py help, python manage.py collectstatic
 ]
 
-#media url
+#Media url
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL='/media/'

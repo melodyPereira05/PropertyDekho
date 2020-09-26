@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('routes.urls') , name="Route-app"),
-]
+    path('properties/', include('properties.urls'),name="Property-app"),
+    #path('blog/', include('properties.urls'),name="Blog-app"),
+    #path('servies/', include('services.urls'),name="Service-app"),
+    #path('agents/', include('agents.urls'),name="Agent-app"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # reference -- https://docs.djangoproject.com/en/3.1/ref/urls/ ,useful in debug mode.
+

@@ -2,3 +2,10 @@ in simgle property:
 add more photos after big one card carousel
 contact realtor button
 
+search is not working properly except for keyword also make good form
+
+index page ,search is not functional yet
+
+search based on land mark.
+
+see the video of scrapping realestate site for our blog application.

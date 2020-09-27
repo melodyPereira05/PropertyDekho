@@ -25,7 +25,17 @@
 		        					<label for="#">Keyword</label>
 		          				<div class="form-field">
 		          					<div class="icon"><span class="fa fa-search"></span></div>
-				                <input type="text" class="form-control" name="keywords" placeholder="Enter Keyword">
+				                <input type="text" class="form-control" value="{{values.keywords}}"  name="keywords" placeholder="Enter Keyword">
+				              </div>
+			              </div>
+							</div>
+							
+							<div class="col-lg align-items-end">
+		        				<div class="form-group">
+		        					<label for="#">City</label>
+		          				<div class="form-field">
+		          					<div class="icon"><span class="fa fa-search"></span></div>
+				                <input type="text" value="{{values.city}}" class="form-control"  name="city" placeholder="Enter City name">
 				              </div>
 			              </div>
 		        			</div>
@@ -39,7 +49,11 @@
 		                      <select name="price" id="type"   class="form-control"  >
 								  {% for key,value in prices.items %}
 								
-								<option value="{{ key }}">{{ value }}</option>
+								<option value="{{ key }}"
+								{% if key == values.price %}
+								selected
+								{% endif %}
+								>{{ value }}</option>
 								{% endfor %}
 		                        
 		                      </select>
@@ -56,7 +70,12 @@
 		                      <select name="" id=""  name="state" class="form-control">
 								{% for key,value in states.items %}
 								
-								<option value="{{ key }}">{{ value }}</option>
+								<option value="{{ key }}"
+
+								{% if key == values.state %}
+								selected
+								{% endif %}
+								>{{ value }}</option>
 								{% endfor %}
 							
 								<option value=""></option>

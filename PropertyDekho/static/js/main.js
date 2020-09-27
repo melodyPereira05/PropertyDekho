@@ -105,29 +105,6 @@
 	  console.log('show');
 	});
 
-	$('#recipeCarousel').carousel({
-		interval: 10000
-	  })
-	  
-	  $('.carousel .carousel-item').each(function(){
-		  var minPerSlide = 3;
-		  var next = $(this).next();
-		  if (!next.length) {
-		  next = $(this).siblings(':first');
-		  }
-		  next.children(':first-child').clone().appendTo($(this));
-		  
-		  for (var i=0;i<minPerSlide;i++) {
-			  next=next.next();
-			  if (!next.length) {
-				  next = $(this).siblings(':first');
-				}
-			  
-			  next.children(':first-child').clone().appendTo($(this));
-			}
-	  });
-	  
-
 	// scroll
 	var scrollWindow = function() {
 		$(window).scroll(function(){
@@ -253,8 +230,6 @@
       duration: 300 // don't foget to change the duration also in CSS
     }
   });
-
-  
 
   $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
     disableOn: 700,

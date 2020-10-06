@@ -9,7 +9,7 @@ from routes.models import Testemonial
 
 def index(request): 
      #fetching data from database
-    properties=Property.objects.order_by('-property_date')
+    properties=Property.objects.order_by('-property_date')  #latest date
     paginator = Paginator(properties, 6) # Show 25 contacts per page.
    
     page_number = request.GET.get('page')

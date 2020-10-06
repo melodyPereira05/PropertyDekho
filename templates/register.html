@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+Register Page
+{% endblock %}
+
 {% block content %}
     <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
@@ -14,9 +18,9 @@
     </section>
 
     <!-- Alerts -->
-    <section style="padding-top: 20px;" >
-        {%include '_alerts.html' %}
-    </section>
+ <section style="padding-top: 20px;" >
+  {%include '_alerts.html' %}
+</section>    
 
     <section class="ftco-section contact-section">
       <div class="container">

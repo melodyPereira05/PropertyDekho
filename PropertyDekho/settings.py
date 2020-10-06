@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'agents.apps.AgentsConfig',
     'django.contrib.humanize', 
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'contacts.apps.ContactsConfig',
     
 ]
 
@@ -144,3 +145,10 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     
 }
+
+#email 
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_USER='melzpereira0509@gmail.com'
+EMAIL_PASSWORD='123'
+EMAIL_USE_TLS=True

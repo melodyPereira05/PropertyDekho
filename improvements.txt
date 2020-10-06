@@ -9,3 +9,16 @@ index page ,search is not functional yet
 search based on land mark.
 
 see the video of scrapping realestate site for our blog application.
+
+improve the admin ui (brad traversy)
+
+add google maps
+
+login using google,twitter,facebook
+
+beautify front end 
+
+user review and rating
+
+
+

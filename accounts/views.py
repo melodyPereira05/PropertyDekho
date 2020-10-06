@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib import auth
+from contacts.models import Contact
 
 def register(request):
     if request.method =='POST':
@@ -28,6 +30,8 @@ def register(request):
                     return redirect('register')
                 else:
                     user=User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
+                    
+                    user.save();  #save user to db
                     messages.add_message(request, messages.SUCCESS, 'You are now register, please log in')
                     return redirect('login')
                     
@@ -42,12 +46,37 @@ def register(request):
     
 def login(request):
     if request.method =='POST':
+        username=request.POST['username']
+        password=request.POST['password']
+        user=auth.authenticate(username=username,password=password)
+        if user is not None:
+            auth.login(request,user)   #login the user
+            messages.add_message(request, messages.SUCCESS, 'You are now logged in')
+            return redirect('home-page')
+        else:
+            messages.add_message(request, messages.ERROR, 'Invalid Credentials')
+            
+            
+            
            
-        return redirect('home-page')
+        return redirect('login')
     else :
         redirect('login')
     return render(request,'login.html')
     
 def logout(request):
+    if request.method =='POST':
+        auth.logout(request)  #logout user
+        messages.add_message(request, messages.SUCCESS, 'You are now logged Out')
     return redirect('home-page')
     
+
+
+def dashboard(request):
+    contact_dashboard=Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)  
+   
+    context={
+        'contacts':contact_dashboard
+      
+    }
+    return render(request,'dashboard.html',context)

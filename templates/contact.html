@@ -1,34 +1,61 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block title %}
+Contact Us
+{% endblock %}
 {% block content %}
     <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate pb-0 text-center">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Contact <i class="fa fa-chevron-right"></i></span></p>
-            <h1 class="mb-3 bread">Contact</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{% url 'home-page' %}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Contact <i class="fa fa-chevron-right"></i></span></p>
+            <h1 class="mb-3 bread">Contact Us</h1>
           </div>
         </div>
       </div>
     </section>
 
+   
+
     <section class="ftco-section contact-section">
       <div class="container">
         <div class="row block-9 justify-content-center mb-5">
           <div class="col-md-8 mb-md-5">
-          	<h2 class="text-center">If you got any questions <br>please do not hesitate to send us a message</h2>
-            <form action="#" class="bg-light p-5 contact-form">
+            <h2 class="text-center"> If you got any questions <br>please do not hesitate to send us a message</h2>
+            <form action="{% url 'contact-submit' %}" method="POST" class="bg-light p-5 contact-form">
+              {% csrf_token  %}
+
+              
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
+                
+                <h2 class="text-center" > <b>{{sproperty.title}}</b>  <br> Sellar - {{sproperty.seller.name}}</h2>
+              </div>
+              {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{user.id}}">
+              {% else %}
+              <input type="hidden" name="user_id" value="0">
+              {% endif %}
+ 
+              <input type="hidden" name="seller_email" value="{{sproperty.seller.name}}">
+              <input type="hidden" name="property_id" value="{{sproperty.id}}">
+              <input type="hidden" name="property_title" value="{{sproperty.title}}">
+              
+            
+               
+
+              <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="Your Name" {% if user.is_authenticated %} value="{{user.first_name}} {{user.last_name}}" {% endif %} >
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
+                <input type="text" class="form-control" name="email" placeholder="Your Email" {% if user.is_authenticated %} value={{user.email}} {% endif %} >
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+                <input type="text" class="form-control"  name="phone" placeholder="Your Phone Number" {% if user.is_authenticated %} value={{user.phone}} {% endif %} >
               </div>
+              
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                <textarea name="message" id="" cols="30" rows="7"  class="form-control" placeholder="Message"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
@@ -44,19 +71,19 @@
 		          	<div class="icon">
 		          		<span class="fa fa-map"></span>
 		          	</div>
-		            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+		            <p><span>Address:</span>Bhuigaon (maria nagar), Vasai West,401201</p>
 		          </div>
 		          <div class="col-md-4 text-center border-height py-4">
 		          	<div class="icon">
 		          		<span class="fa fa-phone"></span>
 		          	</div>
-		            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+		            <p><span>Phone:</span> <a href="tel://1234567920">+91 9730519508</a></p>
 		          </div>
 		          <div class="col-md-4 text-center py-4">
 		          	<div class="icon">
 		          		<span class="fa fa-paper-plane"></span>
 		          	</div>
-		            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+		            <p><span>Email:</span> <a href="melodypereira05@gmail.com">melodypereira05@gmail.com</a></p>
 		          </div>
 		        </div>
           </div>
@@ -68,6 +95,7 @@
         </div>
       </div>
     </section>	
+
 
 {% endblock %}
   

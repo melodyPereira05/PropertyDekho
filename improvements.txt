@@ -1,4 +1,4 @@
-in simgle property:
+in single property:
 add more photos after big one card carousel
 contact realtor button
 
@@ -10,13 +10,13 @@ search based on land mark.
 
 see the video of scrapping realestate site for our blog application.
 
-improve the admin ui (brad traversy)
+improve the admin ui 
 
 add google maps
 
-login using google,twitter,facebook
+login using google,twitter,facebook apis
 
-beautify front end 
+comments
 
 user review and rating
 

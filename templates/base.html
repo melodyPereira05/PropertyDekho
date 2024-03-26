@@ -52,14 +52,7 @@
            >
 
            <a href="{% url 'about-page' %}" class="nav-link">About</a></li>
-           <li
-           {% if 'agents' in request.path %}
-           class="nav-item active "
-           {% else %}
-           class="nav-item"
-           {% endif %}
-           >
-            <a href="agent.html" class="nav-link">Agent</a></li>
+    
             <li
             {% if 'properties' in request.path %}
             class="nav-item active "
@@ -68,22 +61,7 @@
             {% endif %}
             >
             <a href="{% url 'all-property' %}" class="nav-link">Properties</a></li>
-            <li
-            {% if 'blog' in request.path %}
-            class="nav-item active "
-            {% else %}
-            class="nav-item"
-            {% endif %}
-            >
-            <a href="blog.html" class="nav-link">Blog</a></li>
-            <li
-            {% if 'servies' in request.path %}
-            class="nav-item active "
-            {% else %}
-            class="nav-item"
-            {% endif %}
-            >
-            <a href="blog.html" class="nav-link">services</a></li>
+           
 
               {% if user.is_authenticated %}
              
